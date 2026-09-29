@@ -155,10 +155,10 @@
   .lightbox img{max-height:90vh;border-radius:10px}
 
   /* CV */
-  .cv-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .cv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px}
   .cv-grid .glass{padding:28px}
   .cv-grid h3{font-size:1.1rem;margin-bottom:20px}
-  @media(max-width:760px){.cv-grid{grid-template-columns:1fr}}
+  
 
   /* contact / footer */
   .contact{text-align:center}
@@ -198,12 +198,12 @@
         data-images="assets/img/hero-1.jpg, assets/img/hero-2.jpg, assets/img/hero-3.jpg"
         data-interval="6000">
   <div class="wrap hero-content">
-    <div class="eyebrow">PhD Candidate · Universidad de Chile</div>
+    <div class="eyebrow">PhD in Mining Engineering · Universidad de Chile</div>
     <h1>Abhishek Borah<br><span class="grad">Geostatistics × ML</span></h1>
     <p class="lead">I build machine-learning models that understand space — combining kriging, simulation and gradient boosting to map what lies beneath porphyry Cu–Au deposits.</p>
     <div class="btns">
       <a class="btn btn-primary" href="#research">Explore my research →</a>
-      <a class="btn btn-ghost" href="assets/cv.pdf" target="_blank" rel="noopener">Download CV</a>
+      <a class="btn btn-ghost" href="assets/Abhishek_Borah_CV.pdf" download>Download CV ↓</a>
     </div>
   </div>
   <div class="scroll-cue">SCROLL</div>
@@ -223,11 +223,11 @@
       <div class="eyebrow">About me</div>
       <h2 style="font-size:clamp(2rem,4.5vw,3rem);margin:10px 0 20px">Where spatial statistics meets machine learning.</h2>
       <p>I'm a doctoral researcher at the Faculty of Physical and Mathematical Sciences (FCFM), Universidad de Chile, supervised by Prof. Xavier Emery. My work sits where classical geostatistics meets modern machine learning: models that respect the spatial structure of geological data while exploiting the predictive power of gradient-boosted trees.</p>
-      <p class="muted">Based in Santiago. [Add a line about your background and what you enjoy outside research.]</p>
+      <p class="muted">Before moving to Santiago, I trained as a geologist in India — a BSc at Cotton University (Assam) and an MSc at Banaras Hindu University — and worked as a Technical Officer in hydrogeology for the Government of Assam.</p>
       <div class="stats">
-        <div class="stat glass"><b>1</b><span>Journal paper</span></div>
-        <div class="stat glass"><b>2</b><span>Int'l conferences</span></div>
-        <div class="stat glass"><b>3+</b><span>Projects</span></div>
+        <div class="stat glass"><b>1</b><span>Journal paper · Editor's Choice</span></div>
+        <div class="stat glass"><b>4</b><span>International talks</span></div>
+        <div class="stat glass"><b>2</b><span>Awards</span></div>
       </div>
     </div>
   </div>
@@ -260,30 +260,44 @@
     <div class="pubs">
       <!-- Copy one .pub block per paper/talk -->
       <div class="pub glass reveal">
-        <div class="yr">YYYY</div>
+        <div class="yr">2025</div>
         <div>
-          <div class="kind">Journal article</div>
-          <div class="title">[Paper title]</div>
-          <div><span class="me">Borah, A.</span>, Emery, X. · <span class="venue">[Journal], vol(issue), pages</span></div>
-          <div class="links"><a href="#">DOI ↗</a><a href="#">PDF</a><a href="#">Code</a></div>
+          <div class="kind">Journal article · Editor’s Choice</div>
+          <div class="title">Geostatistically Enhanced Learning for Supervised Classification of Wall-Rock Alteration Using Assay Grades of Trace Elements and Sulfides</div>
+          <div><span class="me">Borah, A.</span> · <span class="venue"><em>Minerals</em>, 15(11), 1128</span></div>
+          <div class="links"><a href="https://doi.org/10.3390/min15111128" target="_blank" rel="noopener">DOI: 10.3390/min15111128 ↗</a></div>
         </div>
       </div>
       <div class="pub glass reveal">
         <div class="yr">2026</div>
         <div>
-          <div class="kind">Conference talk</div>
-          <div class="title">[Talk title]</div>
-          <div><span class="me">Borah, A.</span>, et al. · <span class="venue">EGU General Assembly 2026, Vienna</span></div>
-          <div class="links"><a href="#">Abstract ↗</a><a href="#">Slides</a></div>
+          <div class="kind">Oral presentation (online)</div>
+          <div class="title">Integration of Machine Learning and Geostatistics for Hydrothermal Alteration Classification in Smart Mining</div>
+          <div><span class="me">Borah, A.</span> · <span class="venue">European Geosciences Union General Assembly 2026, Vienna, Austria</span></div>
         </div>
       </div>
       <div class="pub glass reveal">
-        <div class="yr">YYYY</div>
+        <div class="yr">2025</div>
         <div>
-          <div class="kind">Conference talk</div>
-          <div class="title">[Talk title]</div>
-          <div><span class="me">Borah, A.</span>, et al. · <span class="venue">FIGA</span></div>
-          <div class="links"><a href="#">Abstract ↗</a></div>
+          <div class="kind">Conference presentation</div>
+          <div class="title">Combining Machine Learning and Geostatistics for Supervised Classification of Hydrothermal Alteration Data</div>
+          <div><span class="me">Borah, A.</span> · <span class="venue">9th International Conference on Geology and Mining (GeoMin Mine Planning 2025), Santiago, Chile</span></div>
+        </div>
+      </div>
+      <div class="pub glass reveal">
+        <div class="yr">2025</div>
+        <div>
+          <div class="kind">Oral presentation</div>
+          <div class="title">Coupling Geostatistics and Machine Learning for Regionalized Classification of Land Use and Rock Types from Soil Geochemical Data</div>
+          <div><span class="me">Borah, A.</span> · <span class="venue">Fourth Triennial Congress of the Federation of Indian Geosciences Association (FIGA 2025), Hyderabad, India</span></div>
+        </div>
+      </div>
+      <div class="pub glass reveal">
+        <div class="yr">2025</div>
+        <div>
+          <div class="kind">Invited online seminar</div>
+          <div class="title">A Combined Use of Geostatistics and Machine Learning to Predict Hydrothermal Alterations for Mineral Exploration</div>
+          <div><span class="me">Borah, A.</span> · <span class="venue">4th Mineral Prospectivity and Exploration Targeting (MinProXT 2025), Ottawa, Canada</span></div>
         </div>
       </div>
     </div>
@@ -302,25 +316,25 @@
       <article class="card glass reveal">
         <div style="overflow:hidden"><div class="card-img" style="--img:url('assets/img/hero-1.jpg')"></div></div>
         <div class="card-body">
-          <h3>Geostatistical features for alteration mapping</h3>
-          <p>Kriging-proxy and simulation-derived features fed into XGBoost for multiclass alteration classification.</p>
-          <ul class="tags"><li>Python</li><li>XGBoost</li></ul>
+          <h3>Geostatistics × machine learning for alteration mapping</h3>
+          <p>Doctoral research at Universidad de Chile: geostatistically enhanced features (kriging proxies, simulation-based features, filtering) combined with XGBoost to classify hydrothermal and wall-rock alteration.</p>
+          <ul class="tags"><li>PhD · 2025–</li><li>Geostatistics</li><li>XGBoost</li></ul>
         </div>
       </article>
       <article class="card glass reveal">
         <div style="overflow:hidden"><div class="card-img" style="--img:url('assets/img/band-2.jpg')"></div></div>
         <div class="card-body">
-          <h3>Cosimulation of an iron ore deposit</h3>
-          <p>Full GSLIB workflow on 1,201 composites (Fe, P, S, density): declustering, normal scores, variograms, turning-bands cosimulation, resource &amp; risk.</p>
-          <ul class="tags"><li>GSLIB</li><li>TBCOSIM</li><li>Python</li></ul>
+          <h3>Co-simulation &amp; regionalized classification software</h3>
+          <p>Junior Research Fellow, Cotton University (Oct 2025 – Mar 2026). Developed algorithms and software plugins for geostatistical co-simulation and regionalized classification to aid deposit-scale modelling. Funded by the TEXMiN Foundation, Govt. of India.</p>
+          <ul class="tags"><li>JRF</li><li>TEXMiN</li><li>Software</li></ul>
         </div>
       </article>
       <article class="card glass reveal">
         <div style="overflow:hidden"><div class="card-img" style="--img:url('assets/img/hero-3.jpg')"></div></div>
         <div class="card-body">
-          <h3>Compositional drillhole workflow</h3>
-          <p>Log-ratio transformation of compositional grades, EDA and contact analysis, Gaussian anamorphosis and simulation.</p>
-          <ul class="tags"><li>Compositional data</li><li>ALR</li></ul>
+          <h3>Documenting Degraded Rivers of Assam</h3>
+          <p>Field documentation of degraded river systems in Assam, funded by Aaranyak. Awarded 1st Prize among the top 20 selections across India.</p>
+          <ul class="tags"><li>2022</li><li>1st Prize</li><li>Fieldwork</li></ul>
         </div>
       </article>
     </div>
@@ -334,9 +348,12 @@
       <div class="eyebrow">Latest</div>
       <h2>News</h2>
       <ul class="timeline">
-        <li><div class="date">2026</div>Presented thesis results at <b>EGU General Assembly 2026</b> and <b>FIGA</b>.</li>
         <li><div class="date">JUL 2026</div>Delivered my doctoral thesis seminar at Universidad de Chile.</li>
-        <li><div class="date">YYYY</div>Paper published in <em>[Journal name]</em>.</li>
+        <li><div class="date">2026</div>Received the <b>EPEC Doctoral Scholarship</b>, Universidad de Chile.</li>
+        <li><div class="date">2026</div>Oral presentation at <b>EGU General Assembly 2026</b>, Vienna.</li>
+        <li><div class="date">2025</div>First-authored paper in <em>Minerals</em>, selected as <b>Editor's Choice</b>.</li>
+        <li><div class="date">OCT 2025</div>Started as Junior Research Fellow on a TEXMiN-funded geostatistical software project.</li>
+        <li><div class="date">2025</div>Talks at GeoMin 2025 (Santiago), FIGA 2025 (Hyderabad) and MinProXT 2025 (Ottawa).</li>
       </ul>
     </div>
   </div>
@@ -373,19 +390,31 @@
       <div class="glass reveal">
         <h3>Education</h3>
         <ul class="timeline">
-          <li><div class="date">YYYY – NOW</div><b>PhD, [Program name]</b><br><span class="muted">Universidad de Chile, FCFM · Advisor: Prof. Xavier Emery</span></li>
-          <li><div class="date">YYYY – YYYY</div><b>[Previous degree]</b><br><span class="muted">[Institution]</span></li>
+          <li><div class="date">2025 – NOW</div><b>Ph.D. in Mining Engineering</b><br><span class="muted">Universidad de Chile, Chile · Advisor: Prof. Xavier Emery</span></li>
+          <li><div class="date">2022 – 2024</div><b>M.Sc. Geology</b><br><span class="muted">Banaras Hindu University, India</span></li>
+          <li><div class="date">2019 – 2022</div><b>B.Sc. Geology</b><br><span class="muted">Cotton University, Assam, India</span></li>
         </ul>
       </div>
       <div class="glass reveal">
-        <h3>Experience &amp; skills</h3>
+        <h3>Experience</h3>
         <ul class="timeline">
-          <li><div class="date">YYYY – YYYY</div><b>[Position]</b><br><span class="muted">[Organisation]</span></li>
-          <li><div class="date">TOOLS</div>Python · XGBoost · GSLIB · LaTeX · [add more]</li>
+          <li><div class="date">OCT 2025 – MAR 2026</div><b>Junior Research Fellow</b><br><span class="muted">Cotton University, Assam · TEXMiN Foundation project</span></li>
+          <li><div class="date">AUG – DEC 2024</div><b>Technical Officer – Hydrogeology</b><br><span class="muted">Jal Jeevan Mission, Govt. of Assam, India</span></li>
+        </ul>
+      </div>
+      <div class="glass reveal">
+        <h3>Awards</h3>
+        <ul class="timeline">
+          <li><div class="date">2026</div><b>EPEC Doctoral Scholarship</b><br><span class="muted">International Scholarship, School of Postgraduate and Continuing Education, Universidad de Chile</span></li>
+          <li><div class="date">2022</div><b>1st Prize — Documenting Degraded Rivers of Assam</b><br><span class="muted">Among the top 20 selections across India · funded by Aaranyak</span></li>
         </ul>
       </div>
     </div>
-    <p style="margin-top:28px" class="reveal"><a class="btn btn-primary" href="assets/cv.pdf" target="_blank" rel="noopener">Download full CV (PDF)</a></p>
+    <div class="btns reveal" style="margin-top:28px">
+      <a class="btn btn-primary" href="assets/Abhishek_Borah_CV.pdf" download>Download full CV (PDF) ↓</a>
+      <a class="btn btn-ghost" href="assets/Abhishek_Borah_CV.pdf" target="_blank" rel="noopener">View online</a>
+    </div>
+    <p class="muted reveal" style="font-size:.85rem;margin-top:12px">Last updated August 2026</p>
   </div>
 </section>
 
@@ -397,6 +426,7 @@
     <p class="muted">Open to research collaborations, talks and conversations about geostatistics and ML.</p>
     <div class="socials">
       <a class="btn btn-primary" href="mailto:abhishekborah0@gmail.com">Email me</a>
+      <a class="btn btn-ghost" href="mailto:abhishek.borah@ug.uchile.cl">University email</a>
       <a class="btn btn-ghost" href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a>
       <a class="btn btn-ghost" href="https://orcid.org/" target="_blank" rel="noopener">ORCID</a>
       <a class="btn btn-ghost" href="https://github.com/astezron" target="_blank" rel="noopener">GitHub</a>
