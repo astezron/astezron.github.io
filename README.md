@@ -1,49 +1,36 @@
-# Personal website — Abhishek Borah
+# Abhishek Borah — Personal Website
 
-Plain HTML + CSS, no build step. Hosted free on GitHub Pages.
+Welcome! This is the source for my personal academic website. I am a PhD student in Mining Engineering at the Universidad de Chile, supervised by Prof. Xavier Emery. I work in the Mining Engineering Department and the Advanced Mining Technology Center (AMTC).
 
-```
-index.html              ← main page (About, Research, Publications, Projects, CV, Writing)
-blog/index.html         ← list of posts
-blog/posts/*.html       ← one file per post (copy hello-world.html as a template)
-assets/css/style.css    ← all styling; colors/fonts are variables at the top
-assets/js/main.js       ← dark-mode toggle, mobile menu
-assets/img/             ← put profile.jpg and figures here
-assets/cv.pdf           ← add your CV here (the "Download CV" button links to it)
-.nojekyll               ← tells GitHub Pages to serve files as-is
-```
+## What this website is about
 
-## Publish on GitHub Pages (≈5 minutes)
+The site introduces me as a researcher and as a person. It covers my doctoral research, where geostatistics meets machine learning. It also covers the path that brought me here, from studying geology in India to doing research in Santiago, Chile.
 
-1. Sign in to GitHub → **New repository**.
-2. Name it exactly **`YOUR-USERNAME.github.io`** (replace with your GitHub username). Public. Create.
-3. On the new repo page click **"uploading an existing file"**, drag in *everything inside this folder*
-   (including `assets/`, `blog/` and `.nojekyll`), then **Commit changes**.
-4. Go to **Settings → Pages**. Under *Build and deployment* choose **Deploy from a branch**, branch **main**, folder **/ (root)**, Save.
-5. After ~1 minute your site is live at **https://YOUR-USERNAME.github.io**.
+My research looks at **supervised classification of regionalized data**. Standard machine learning classifiers ignore spatial correlation. Geostatistics can use that correlation to classify better and to quantify how uncertain each classification is. My approach builds geostatistical proxies at the data locations, using simulation that filters out short-scale variability. These proxies then serve as features for machine learning models. I apply this to problems such as classifying hydrothermal alteration in porphyry Cu-Au deposits. The goal is better mineral resource estimation, for more efficient and sustainable mining.
 
-> Hidden file tip: on Windows/Mac `.nojekyll` may be hidden. If it doesn't upload, create it on GitHub with
-> **Add file → Create new file**, name `.nojekyll`, leave it empty, commit.
+## What you'll find here
 
-### Using git instead (optional)
-```bash
-git clone https://github.com/YOUR-USERNAME/YOUR-USERNAME.github.io
-# copy the site files into that folder, then:
-git add . && git commit -m "Initial site" && git push
-```
+- **About me:** my background, education and supervisor
+- **Research:** an overview of my doctoral work, with an animated workflow graphic
+- **Publications & talks:** journal papers and conference presentations
+- **Projects:** selected research and technical work
+- **Research milestones:** a timeline of recent publications and talks
+- **Life beyond research:** photos and stories from life in Chile
+- **CV:** education, experience, awards and funding, with a downloadable PDF
+- **Blog:** occasional writing on research and life
+- **Postcards & contact:** a place to send a virtual hello or get in touch
 
-## Editing checklist
-- [ ] Replace `YOUR-USERNAME` in the GitHub link (index.html)
-- [ ] Add Google Scholar, ORCID, LinkedIn URLs
-- [ ] Fill in publications, talk titles, CV dates, PhD program name
-- [ ] Add `assets/img/profile.jpg` (square, ~400×400) and swap the avatar div (see comment in index.html)
-- [ ] Add `assets/cv.pdf`
-- [ ] Rewrite the sample blog post
+## What it aims to achieve
 
-## Writing a new blog post
-1. Copy `blog/posts/hello-world.html` → `blog/posts/my-new-post.html` and edit title/date/text.
-2. Add a `<li>` for it at the top of the list in `blog/index.html` (and optionally in the *Writing* section of `index.html`).
-3. Commit — the site updates within a minute.
+1. **Share my research openly.** I want geostatistics and machine learning for mineral resource classification to be accessible to researchers, industry practitioners and students.
+2. **Keep an up-to-date record** of my publications, talks, projects and academic milestones.
+3. **Open doors for collaboration.** I'd like to connect with people working in geostatistics, spatial data science, economic geology and mining.
+4. **Show the person behind the research,** including the international community, culture and experiences that make up life as a doctoral student abroad.
 
-## Custom domain (optional)
-Buy a domain (e.g. `abhishekborah.com`), then in **Settings → Pages → Custom domain** enter it and follow GitHub's DNS instructions.
+## Get in touch
+
+I'm always open to research collaborations, talks and conversations about geostatistics and ML. You can reach me through the contact section of the website.
+
+---
+
+*Built with plain HTML and CSS, and hosted on GitHub Pages.*
