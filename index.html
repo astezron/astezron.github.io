@@ -10,26 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%23e0915f'/><text x='50' y='68' font-size='52' text-anchor='middle' fill='%23111' font-family='Arial' font-weight='700'>A</text></svg>">
 
-<!-- =====================================================================
-     HOW TO CHANGE THE BACKGROUND PICTURES
-     1. Put your photos in  assets/img/  (JPG, ~1920px wide, under ~500 KB each).
-     2. HERO slideshow  → edit the list in data-images="..." on <header class="hero"> below.
-                          One image = static background. Several = crossfading slideshow.
-     3. PHOTO BANDS     → each <section class="band" style="--bg:url('...')"> has its own picture.
-     4. PROJECT CARDS   → upload  assets/img/project-1.jpg, project-2.jpg, project-3.jpg
-                          (landscape, ~1200px wide). Until a file exists, the card falls
-                          back to the picture in --img-fallback, so nothing breaks.
-     5. GALLERY         → upload  assets/img/gallery-01.jpg … gallery-09.jpg (any shape).
-                          Slots 01–06 fall back to the old pictures until you upload yours;
-                          slots 07–09 stay hidden until their file exists.
-                          Need more? Copy a <figure> and use gallery-10.jpg, gallery-11.jpg …
-     6. PHOTO CREDITS   → edit PHOTO_CREDITS in the <script> just below </style>.
-                          Credited photos get a small credit badge on the picture and a line
-                          in "Photo credits & licenses" at the bottom of the page.
-     7. POSTCARDS       → set POSTCARD_CONFIG.web3formsKey (same script) to receive postcards
-                          by email. Without a key, "Send" opens the visitor's email app instead.
-     Overlay darkness: change --overlay below (0 = none, 0.8 = very dark).
-     ===================================================================== -->
+
 
 <style>
   :root{
@@ -298,7 +279,7 @@ window.PHOTO_CREDITS = {
    With an empty key, "Send" opens the visitor's own email app instead.
    ===================================================================== */
 window.POSTCARD_CONFIG = {
-  web3formsKey: "",
+  web3formsKey: "87163f16-a31f-4492-b66e-9921fd1a5b66",
   fallbackEmail: "abhishekborah0@gmail.com",
   home: { name: "Santiago", lat: -33.4489, lon: -70.6693 }
 };
