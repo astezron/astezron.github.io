@@ -7,7 +7,7 @@
 <meta name="description" content="Doctoral researcher at Universidad de Chile working at the intersection of geostatistics and machine learning.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%23e0915f'/><text x='50' y='68' font-size='52' text-anchor='middle' fill='%23111' font-family='Arial' font-weight='700'>A</text></svg>">
 
 <!-- =====================================================================
@@ -16,8 +16,18 @@
      2. HERO slideshow  → edit the list in data-images="..." on <header class="hero"> below.
                           One image = static background. Several = crossfading slideshow.
      3. PHOTO BANDS     → each <section class="band" style="--bg:url('...')"> has its own picture.
-     4. PROJECT CARDS   → each .card-img has style="--img:url('...')".
-     5. GALLERY         → each <figure> holds an <img src="...">.
+     4. PROJECT CARDS   → upload  assets/img/project-1.jpg, project-2.jpg, project-3.jpg
+                          (landscape, ~1200px wide). Until a file exists, the card falls
+                          back to the picture in --img-fallback, so nothing breaks.
+     5. GALLERY         → upload  assets/img/gallery-01.jpg … gallery-09.jpg (any shape).
+                          Slots 01–06 fall back to the old pictures until you upload yours;
+                          slots 07–09 stay hidden until their file exists.
+                          Need more? Copy a <figure> and use gallery-10.jpg, gallery-11.jpg …
+     6. PHOTO CREDITS   → edit PHOTO_CREDITS in the <script> just below </style>.
+                          Credited photos get a small credit badge on the picture and a line
+                          in "Photo credits & licenses" at the bottom of the page.
+     7. POSTCARDS       → set POSTCARD_CONFIG.web3formsKey (same script) to receive postcards
+                          by email. Without a key, "Send" opens the visitor's email app instead.
      Overlay darkness: change --overlay below (0 = none, 0.8 = very dark).
      ===================================================================== -->
 
@@ -45,7 +55,7 @@
   .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
   .logo{font:700 1.15rem var(--display)}
   .logo span{color:var(--accent)}
-  .nav-links{display:flex;gap:28px;font-size:.9rem}
+  .nav-links{display:flex;gap:24px;font-size:.9rem}
   .nav-links a{color:rgba(255,255,255,.78);position:relative;padding:4px 0}
   .nav-links a::after{content:"";position:absolute;left:0;bottom:-2px;height:2px;width:0;background:var(--accent);transition:width .25s}
   .nav-links a:hover,.nav-links a.active{color:#fff}
@@ -55,7 +65,7 @@
     .burger{display:block}
     .nav-links{position:fixed;top:68px;left:0;right:0;flex-direction:column;gap:0;background:rgba(14,16,19,.96);backdrop-filter:blur(14px);
       max-height:0;overflow:hidden;transition:max-height .35s}
-    .nav-links.open{max-height:420px;border-bottom:1px solid var(--glass-brd)}
+    .nav-links.open{max-height:520px;border-bottom:1px solid var(--glass-brd)}
     .nav-links a{padding:14px 20px;border-top:1px solid var(--glass-brd)}
     .nav-links a::after{display:none}
   }
@@ -137,7 +147,8 @@
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px}
   .card{overflow:hidden;display:flex;flex-direction:column;transition:transform .3s,border-color .3s}
   .card:hover{transform:translateY(-6px);border-color:rgba(224,145,95,.45)}
-  .card-img{aspect-ratio:16/10;background:var(--img) center/cover no-repeat,linear-gradient(135deg,#3a2618,#1b2630);transition:transform .6s}
+  .card-media{overflow:hidden;position:relative}
+  .card-img{aspect-ratio:16/10;background:var(--img) center/cover no-repeat,var(--img-fallback,none) center/cover no-repeat,linear-gradient(135deg,#3a2618,#1b2630);transition:transform .6s}
   .card:hover .card-img{transform:scale(1.05)}
   .card-body{padding:22px}
   .card-body h3{font-size:1.2rem;margin-bottom:8px}
@@ -166,11 +177,139 @@
   .socials{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-top:28px}
   footer{border-top:1px solid var(--glass-brd);padding:28px 0;color:var(--muted);font-size:.85rem;text-align:center}
 
+  /* photo credits */
+  .credit{position:absolute;right:10px;bottom:8px;z-index:4;max-width:calc(100% - 20px);font:500 .68rem/1.4 var(--sans);color:rgba(255,255,255,.82);
+          background:rgba(0,0,0,.5);padding:3px 9px;border-radius:6px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+          white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .credit a{text-decoration:underline;text-underline-offset:2px}
+  .credit a:hover{color:#fff}
+  .gallery .credit{top:8px;bottom:auto}
+  .hero > .credit{bottom:14px;right:16px}
+  .credits{max-width:760px;margin:14px auto 0;text-align:left}
+  .credits summary{cursor:pointer;text-align:center;color:var(--accent-2);list-style:none}
+  .credits summary::-webkit-details-marker{display:none}
+  .credits summary::after{content:" ▾"}
+  .credits[open] summary::after{content:" ▴"}
+  .credits ul{margin:14px 0 0;padding-left:18px;display:grid;gap:6px}
+  .credits a{color:var(--accent-2);text-decoration:underline;text-underline-offset:2px}
+
+  /* postcards */
+  .pc-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:44px;align-items:center}
+  @media(max-width:900px){.pc-wrap{grid-template-columns:1fr}}
+  .pc-form{padding:28px;display:grid;gap:18px}
+  .field label,.field .lbl{display:block;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+  .input{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--glass-brd);border-radius:12px;padding:11px 14px;color:var(--text);font:inherit;font-size:.95rem}
+  .input:focus{outline:none;border-color:var(--accent);background:rgba(255,255,255,.08)}
+  textarea.input{resize:vertical;min-height:110px}
+  .loc-row{display:flex;gap:8px;flex-wrap:wrap}
+  .loc-row .input{flex:1 1 180px}
+  .btn-sm{padding:10px 16px;font-size:.85rem;cursor:pointer;color:inherit;font-family:inherit}
+  button.btn{border:0;cursor:pointer;font-family:inherit}
+  button.btn-ghost{border:1px solid rgba(255,255,255,.25);color:#fff}
+  .hint{font-size:.8rem;color:var(--muted);margin-top:6px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:520px){.row2{grid-template-columns:1fr}}
+  .themes{display:flex;gap:10px}
+  .theme-opt{position:relative}
+  .theme-opt input{position:absolute;opacity:0;pointer-events:none}
+  .theme-opt span{display:block;width:52px;height:34px;border-radius:9px;border:2px solid transparent;cursor:pointer;transition:border-color .2s}
+  .theme-opt input:checked+span{border-color:var(--accent)}
+  .theme-opt input:focus-visible+span{outline:2px solid #fff;outline-offset:2px}
+  .sw-andes{background:linear-gradient(180deg,#f7b267,#8e3b46)}
+  .sw-coast{background:linear-gradient(180deg,#9fd8ef,#2f6e9b)}
+  .sw-night{background:linear-gradient(180deg,#2a3558,#0a0d1c)}
+  .count{float:right;font-size:.75rem;color:var(--muted)}
+  .status{font-size:.9rem;min-height:1.4em;margin:0}
+  .status.ok{color:#8fd19e}.status.err{color:#f08a7a}
+  .hp{position:absolute;left:-9999px}
+
+  .pc-scene{perspective:1800px;container-type:inline-size}
+  .pc{position:relative;aspect-ratio:3/2;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+  .pc.flipped{transform:rotateY(180deg)}
+  .pc-face{position:absolute;inset:0;border-radius:14px;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 30px 70px rgba(0,0,0,.5)}
+  .pc-front{--sky1:#f7b267;--sky2:#8e3b46;--m1:#5b2a3a;--m2:#2d1622;--sun:#ffe3a3;background:linear-gradient(180deg,var(--sky1),var(--sky2))}
+  .pc-front[data-theme=coast]{--sky1:#9fd8ef;--sky2:#2f6e9b;--m1:#1f4e6e;--m2:#0f2e45;--sun:#fff6d8}
+  .pc-front[data-theme=night]{--sky1:#1b2340;--sky2:#0a0d1c;--m1:#2a3558;--m2:#141a31;--sun:#e9ecf5}
+  .pc-front:not([data-theme=night]) .stars{display:none}
+  .pc-front svg{position:absolute;inset:0;width:100%;height:100%}
+  .pc-greet{position:absolute;left:6%;top:9%;right:6%;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.35)}
+  .pc-greet small{font:600 2.1cqw var(--sans);letter-spacing:.25em;text-transform:uppercase;opacity:.92}
+  .pc-greet strong{display:block;font:700 8cqw/1.05 var(--display);margin:1cqw 0;overflow-wrap:anywhere}
+  .pc-greet span{font-size:2.8cqw;opacity:.92}
+  .pc-coords{position:absolute;left:6%;bottom:6%;font:600 2cqw var(--sans);letter-spacing:.14em;color:rgba(255,255,255,.75)}
+  .pc-back{transform:rotateY(180deg);background:#f6efe2;color:#2b2420;display:grid;grid-template-columns:1.25fr 1fr;padding:5cqw 5cqw 4.5cqw;gap:4cqw;
+           background-image:radial-gradient(rgba(120,90,60,.06) 1px,transparent 1px);background-size:6px 6px}
+  .pc-left{display:flex;flex-direction:column;min-width:0}
+  .pc-msg{font:500 4.4cqw/1.25 "Caveat",cursive;margin:0;flex:1;overflow:hidden;white-space:pre-wrap;overflow-wrap:anywhere;
+          -webkit-mask-image:linear-gradient(#000 85%,transparent);mask-image:linear-gradient(#000 85%,transparent)}
+  .pc-sign{font:700 4.2cqw "Caveat",cursive;margin:1cqw 0 0;color:#7a3f1f}
+  .pc-right{border-left:1px solid rgba(43,36,32,.25);padding-left:4cqw;position:relative;display:flex;flex-direction:column;justify-content:flex-end;min-width:0}
+  .pc-stamp{position:absolute;top:0;right:0;width:13cqw;aspect-ratio:4/5;background:#fff;padding:.9cqw;
+            box-shadow:0 0 0 .5cqw #fff;outline:.35cqw dashed #cdbfa9;outline-offset:.2cqw;display:flex;flex-direction:column;align-items:center;gap:.6cqw}
+  .pc-stamp .flag{flex:1;width:100%;background:linear-gradient(135deg,#e0915f,#8e3b46);display:grid;place-items:center;font:700 3cqw var(--display);color:#fff;overflow:hidden}
+  .pc-stamp .flag img{width:100%;height:100%;object-fit:cover}
+  .pc-stamp small{font:700 1.4cqw var(--sans);letter-spacing:.15em;color:#7a3f1f}
+  .pc-postmark{position:absolute;top:3cqw;right:10cqw;width:17cqw;aspect-ratio:1;border:.4cqw solid rgba(122,63,31,.55);border-radius:50%;
+               display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:rgba(122,63,31,.8);
+               transform:rotate(-14deg);font:700 1.5cqw/1.3 var(--sans);letter-spacing:.08em;text-transform:uppercase;padding:1cqw}
+  .pc-postmark b{font-size:1.9cqw;border-top:.25cqw solid currentColor;border-bottom:.25cqw solid currentColor;padding:.3cqw 0;margin:.3cqw 0;width:100%}
+  .pc-postmark span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .pc-addr div{font:500 3.1cqw "Caveat",cursive;border-bottom:1px solid rgba(43,36,32,.3);padding:.6cqw 0}
+  .pc-dist{margin-top:1.8cqw;font:600 1.7cqw var(--sans);letter-spacing:.1em;text-transform:uppercase;color:#7a3f1f}
+  .pc-controls{display:flex;justify-content:center;gap:10px;margin-top:22px}
+
   /* reveal on scroll */
   .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
   .reveal.in{opacity:1;transform:none}
-  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.hero .slide{transition:opacity .5s}*{scroll-behavior:auto}}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.hero .slide{transition:opacity .5s}*{scroll-behavior:auto}.pc{transition:none}}
 </style>
+
+<script>
+/* =====================================================================
+   PHOTO CREDITS — one entry per photo that needs attribution.
+   Key = the image FILE NAME (e.g. "band-1.jpg"), wherever it is used.
+   Fields (only "author" and "license" are required):
+     title      – name of the photo
+     author     – photographer / creator
+     authorUrl  – link to the author's page (optional)
+     source     – link to where you found the photo (e.g. Wikimedia Commons page)
+     license    – short name, e.g. "CC BY-SA 4.0", "CC BY 2.0", "Unsplash License"
+     licenseUrl – link to the licence text
+     changes    – e.g. "cropped and darkened" (CC licences ask you to say so)
+   Photos without an entry show no credit. Example (remove the // to use it):
+   ===================================================================== */
+window.PHOTO_CREDITS = {
+  // "band-1.jpg": {
+  //   title: "Chuquicamata open-pit mine",
+  //   author: "Jane Doe",
+  //   authorUrl: "https://commons.wikimedia.org/wiki/User:JaneDoe",
+  //   source: "https://commons.wikimedia.org/wiki/File:Example.jpg",
+  //   license: "CC BY-SA 4.0",
+  //   licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+  //   changes: "cropped"
+  // },
+};
+
+/* =====================================================================
+   POSTCARDS — how postcards reach you.
+   1. Go to https://web3forms.com, enter abhishekborah0@gmail.com, and copy
+      the Access Key they email you (free, no account needed).
+   2. Paste it below. Postcards then arrive in your inbox.
+   With an empty key, "Send" opens the visitor's own email app instead.
+   ===================================================================== */
+window.POSTCARD_CONFIG = {
+  web3formsKey: "",
+  fallbackEmail: "abhishekborah0@gmail.com",
+  home: { name: "Santiago", lat: -33.4489, lon: -70.6693 }
+};
+
+/* If a custom photo is missing, use data-fallback; if that's missing too, hide the slot. */
+function imgFallback(img){
+  var fb = img.getAttribute('data-fallback');
+  if (fb && !img.getAttribute('data-tried')) { img.setAttribute('data-tried','1'); img.src = fb; }
+  else { (img.closest('figure') || img).remove(); }
+}
+</script>
 </head>
 <body>
 
@@ -187,6 +326,7 @@
       <a href="#gallery">Life</a>
       <a href="#cv">CV</a>
       <a href="blog/">Blog</a>
+      <a href="#postcards">Postcards</a>
       <a href="#contact">Contact</a>
     </div>
   </div>
@@ -306,7 +446,9 @@
 </section>
 
 <!-- ================= PROJECTS =================
-     Each card image: style="--img:url('assets/img/your-figure.jpg')" -->
+     Card pictures: upload assets/img/project-1.jpg, project-2.jpg, project-3.jpg.
+     --img = your picture · --img-fallback = shown until your picture exists.
+     You can also point --img at any other file name. -->
 <section id="projects" style="background:var(--bg-2)">
   <div class="wrap">
     <div class="sec-head reveal">
@@ -315,7 +457,7 @@
     </div>
     <div class="grid">
       <article class="card glass reveal">
-        <div style="overflow:hidden"><div class="card-img" style="--img:url('assets/img/hero-1.jpg')"></div></div>
+        <div class="card-media"><div class="card-img" style="--img:url('assets/img/project-1.jpg');--img-fallback:url('assets/img/hero-1.jpg')"></div></div>
         <div class="card-body">
           <h3>Geostatistics × machine learning for alteration mapping</h3>
           <p>Doctoral research at Universidad de Chile: geostatistically enhanced features (kriging proxies, simulation-based features, filtering) combined with XGBoost to classify hydrothermal and wall-rock alteration.</p>
@@ -323,7 +465,7 @@
         </div>
       </article>
       <article class="card glass reveal">
-        <div style="overflow:hidden"><div class="card-img" style="--img:url('assets/img/band-2.jpg')"></div></div>
+        <div class="card-media"><div class="card-img" style="--img:url('assets/img/project-2.jpg');--img-fallback:url('assets/img/band-2.jpg')"></div></div>
         <div class="card-body">
           <h3>Co-simulation &amp; regionalized classification software</h3>
           <p>Junior Research Fellow, Cotton University (Oct 2025 – Mar 2026). Developed algorithms and software plugins for geostatistical co-simulation and regionalized classification to aid deposit-scale modelling. Funded by the TEXMiN Foundation, Govt. of India.</p>
@@ -331,7 +473,7 @@
         </div>
       </article>
       <article class="card glass reveal">
-        <div style="overflow:hidden"><div class="card-img" style="--img:url('assets/img/hero-3.jpg')"></div></div>
+        <div class="card-media"><div class="card-img" style="--img:url('assets/img/project-3.jpg');--img-fallback:url('assets/img/hero-3.jpg')"></div></div>
         <div class="card-body">
           <h3>Documenting Degraded Rivers of Assam</h3>
           <p>Field documentation of degraded river systems in Assam, funded by Aaranyak. Awarded 1st Prize among the top 20 selections across India.</p>
@@ -362,7 +504,10 @@
 </section>
 
 <!-- ================= GALLERY (personal photos) =================
-     Add/remove <figure> blocks. Click a photo to enlarge. -->
+     Upload assets/img/gallery-01.jpg … gallery-09.jpg. Slots with data-fallback show the
+     old picture until yours exists; slots without it stay hidden until uploaded.
+     Add more by copying a <figure> (gallery-10.jpg …). Click a photo to enlarge.
+     Write a short alt="" description for each photo you add. -->
 <section id="gallery">
   <div class="wrap">
     <div class="sec-head reveal">
@@ -371,12 +516,15 @@
       <p class="muted">Field trips, conferences, Santiago, and everything in between.</p>
     </div>
     <div class="gallery">
-      <figure class="reveal"><img src="assets/img/hero-2.jpg" alt="" loading="lazy"><figcaption>[Caption — e.g. EGU 2026, Vienna]</figcaption></figure>
-      <figure class="reveal"><img src="assets/img/band-1.jpg" alt="" loading="lazy"><figcaption>[Caption — fieldwork]</figcaption></figure>
-      <figure class="reveal"><img src="assets/img/hero-3.jpg" alt="" loading="lazy"><figcaption>[Caption — the Andes]</figcaption></figure>
-      <figure class="reveal"><img src="assets/img/hero-1.jpg" alt="" loading="lazy"><figcaption>[Caption]</figcaption></figure>
-      <figure class="reveal"><img src="assets/img/band-2.jpg" alt="" loading="lazy"><figcaption>[Caption]</figcaption></figure>
-      <figure class="reveal"><img src="assets/img/hero-2.jpg" alt="" loading="lazy"><figcaption>[Caption]</figcaption></figure>
+      <figure class="reveal"><img src="assets/img/gallery-01.jpg" data-fallback="assets/img/hero-2.jpg" onerror="imgFallback(this)" alt="" loading="lazy"><figcaption>[Caption — e.g. EGU 2026, Vienna]</figcaption></figure>
+      <figure class="reveal"><img src="assets/img/gallery-02.jpg" data-fallback="assets/img/band-1.jpg" onerror="imgFallback(this)" alt="" loading="lazy"><figcaption>[Caption — fieldwork]</figcaption></figure>
+      <figure class="reveal"><img src="assets/img/gallery-03.jpg" data-fallback="assets/img/hero-3.jpg" onerror="imgFallback(this)" alt="" loading="lazy"><figcaption>[Caption — the Andes]</figcaption></figure>
+      <figure class="reveal"><img src="assets/img/gallery-04.jpg" data-fallback="assets/img/hero-1.jpg" onerror="imgFallback(this)" alt="" loading="lazy"><figcaption>[Caption]</figcaption></figure>
+      <figure class="reveal"><img src="assets/img/gallery-05.jpg" data-fallback="assets/img/band-2.jpg" onerror="imgFallback(this)" alt="" loading="lazy"><figcaption>[Caption]</figcaption></figure>
+      <figure class="reveal"><img src="assets/img/gallery-06.jpg" data-fallback="assets/img/hero-2.jpg" onerror="imgFallback(this)" alt="" loading="lazy"><figcaption>[Caption]</figcaption></figure>
+      <figure class="reveal"><img src="assets/img/gallery-07.jpg" onerror="imgFallback(this)" alt="" loading="lazy"><figcaption>[Caption]</figcaption></figure>
+      <figure class="reveal"><img src="assets/img/gallery-08.jpg" onerror="imgFallback(this)" alt="" loading="lazy"><figcaption>[Caption]</figcaption></figure>
+      <figure class="reveal"><img src="assets/img/gallery-09.jpg" onerror="imgFallback(this)" alt="" loading="lazy"><figcaption>[Caption]</figcaption></figure>
     </div>
   </div>
 </section>
@@ -422,6 +570,108 @@
   </div>
 </section>
 
+<!-- ================= POSTCARDS =================
+     Visitors make a postcard from their city and send it to you.
+     Delivery is set in POSTCARD_CONFIG (top of the page). -->
+<section id="postcards" style="background:var(--bg-2)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Say hello</div>
+      <h2>Send me a virtual postcard</h2>
+      <p class="muted">Tell me where you're reading this from. Your postcard is stamped with your city and its distance to Santiago.</p>
+    </div>
+    <div class="pc-wrap">
+      <form class="pc-form glass reveal" id="pcForm" novalidate>
+        <div class="field">
+          <label for="pcLoc">Your location</label>
+          <div class="loc-row">
+            <input class="input" id="pcLoc" placeholder="City, country — e.g. Guwahati, India" autocomplete="address-level2">
+            <button type="button" class="btn btn-ghost btn-sm" id="pcFind">Find</button>
+            <button type="button" class="btn btn-ghost btn-sm" id="pcGeo">◎ Use my location</button>
+          </div>
+          <p class="hint" id="pcLocHint">Only your city and country go on the card, never exact coordinates.</p>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="pcName">Your name</label>
+            <input class="input" id="pcName" maxlength="60" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="pcEmail">Email <span style="text-transform:none;letter-spacing:0">(optional, if you'd like a reply)</span></label>
+            <input class="input" id="pcEmail" type="email" maxlength="120" autocomplete="email">
+          </div>
+        </div>
+        <div class="field">
+          <span class="lbl">Card design</span>
+          <div class="themes" role="radiogroup" aria-label="Card design">
+            <label class="theme-opt" title="Andes sunset"><input type="radio" name="pcTheme" value="andes" checked><span class="sw-andes"></span></label>
+            <label class="theme-opt" title="Pacific coast"><input type="radio" name="pcTheme" value="coast"><span class="sw-coast"></span></label>
+            <label class="theme-opt" title="Atacama night"><input type="radio" name="pcTheme" value="night"><span class="sw-night"></span></label>
+          </div>
+        </div>
+        <div class="field">
+          <label for="pcText">Message <span class="count" id="pcCount">0 / 280</span></label>
+          <textarea class="input" id="pcText" maxlength="280" required></textarea>
+        </div>
+        <input type="checkbox" name="botcheck" class="hp" id="pcBot" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="btns">
+          <button type="submit" class="btn btn-primary" id="pcSend">Send postcard →</button>
+        </div>
+        <p class="status" id="pcStatus" role="status" aria-live="polite"></p>
+      </form>
+
+      <div class="reveal">
+        <div class="pc-scene">
+          <div class="pc" id="pc" aria-label="Postcard preview">
+            <div class="pc-face pc-front" id="pcFront" data-theme="andes">
+              <svg viewBox="0 0 600 400" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+                <g class="stars" fill="#fff" opacity=".8">
+                  <circle cx="60" cy="40" r="1.4"/><circle cx="140" cy="90" r="1"/><circle cx="220" cy="30" r="1.6"/><circle cx="300" cy="70" r="1"/>
+                  <circle cx="380" cy="25" r="1.2"/><circle cx="520" cy="60" r="1.5"/><circle cx="560" cy="130" r="1"/><circle cx="470" cy="110" r="1"/>
+                  <circle cx="30" cy="150" r="1"/><circle cx="250" cy="140" r="1.2"/>
+                </g>
+                <circle cx="455" cy="205" r="48" style="fill:var(--sun)"/>
+                <g fill="none" stroke="#fff" stroke-opacity=".13" stroke-width="1.2">
+                  <path d="M-10 250 C120 215 220 245 330 225 S520 200 610 215"/>
+                  <path d="M-10 275 C140 240 240 270 350 250 S530 228 610 240"/>
+                </g>
+                <path d="M0 300 L80 232 L150 270 L240 168 L330 250 L400 198 L480 258 L560 188 L600 220 V400 H0Z" style="fill:var(--m1)"/>
+                <path d="M240 168 L262 193 L250 190 L240 200 L228 192 L220 192Z M560 188 L578 205 L566 203 L558 210 L548 202Z" fill="#fff" opacity=".7"/>
+                <path d="M0 342 L90 290 L170 332 L260 262 L360 332 L450 290 L530 330 L600 300 V400 H0Z" style="fill:var(--m2)"/>
+              </svg>
+              <div class="pc-greet">
+                <small>Greetings from</small>
+                <strong id="pcCity">Your city</strong>
+                <span id="pcCountry">Anywhere on Earth</span>
+              </div>
+              <div class="pc-coords" id="pcCoords"></div>
+            </div>
+            <div class="pc-face pc-back">
+              <div class="pc-left">
+                <p class="pc-msg" id="pcMsgOut">Hola Abhishek! …</p>
+                <p class="pc-sign">— <span id="pcNameOut">A friend</span></p>
+              </div>
+              <div class="pc-right">
+                <div class="pc-stamp"><div class="flag" id="pcFlag">✉</div><small>AIR MAIL</small></div>
+                <div class="pc-postmark"><span id="pcPmCity">Earth</span><b id="pcDate"></b><span>Post</span></div>
+                <div class="pc-addr">
+                  <div>Abhishek Borah</div>
+                  <div>FCFM, Universidad de Chile</div>
+                  <div>Santiago, Chile</div>
+                </div>
+                <div class="pc-dist" id="pcDist">&nbsp;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pc-controls">
+          <button type="button" class="btn btn-ghost btn-sm" id="pcFlip">Flip postcard ↻</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ================= CONTACT ================= -->
 <section id="contact" class="contact">
   <div class="wrap reveal">
@@ -439,12 +689,41 @@
   </div>
 </section>
 
-<footer>© <span id="year"></span> Abhishek Borah · Santiago, Chile</footer>
+<footer>
+  <div class="wrap">
+    <div>© <span id="year"></span> Abhishek Borah · Santiago, Chile</div>
+    <!-- Filled automatically from PHOTO_CREDITS; hidden while that list is empty. -->
+    <details class="credits" id="credits" hidden>
+      <summary>Photo credits &amp; licenses</summary>
+      <ul id="creditList"></ul>
+    </details>
+  </div>
+</footer>
 
 <div class="lightbox" id="lightbox"><img alt=""></div>
 
 <script>
 (function(){
+  // ---- Photo credits (badges on pictures + list in footer) ----
+  const CREDITS = window.PHOTO_CREDITS || {};
+  const fileName = src => (src || '').split(/[?#]/)[0].split('/').pop();
+  const creditFor = src => CREDITS[fileName(src)];
+  const link = (text, href) => {
+    if (!href) return document.createTextNode(text);
+    const a = document.createElement('a'); a.href = href; a.target = '_blank'; a.rel = 'noopener'; a.textContent = text; return a;
+  };
+  function creditBadge(host, src){
+    if (!host) return;
+    [...host.children].forEach(n => n.classList && n.classList.contains('credit') && n.remove());
+    const c = creditFor(src); if (!c) return;
+    const el = document.createElement('div'); el.className = 'credit';
+    el.append('Photo: ', link(c.author || 'Unknown', c.source || c.authorUrl));
+    if (c.license) el.append(' · ', link(c.license, c.licenseUrl));
+    host.appendChild(el);
+  }
+  window.creditBadge = creditBadge;
+  const cssUrl = (el, v) => { const m = (el.getAttribute('style') || '').match(new RegExp('--' + v + '\\s*:\\s*url\\([\'"]?([^\'")]+)')); return m && m[1]; };
+
   // ---- Hero background slideshow ----
   const hero = document.querySelector('.hero');
   const imgs = (hero.dataset.images || '').split(',').map(s => s.trim()).filter(Boolean);
@@ -464,6 +743,7 @@
     slides.forEach((s,k)=>s.classList.toggle('show',k===i));
     [...dotsEl.children].forEach((b,k)=>b.classList.toggle('on',k===i));
     cur = i;
+    creditBadge(hero, imgs[i]);
   }
   function restart(){ clearInterval(timer); if (slides.length > 1) timer = setInterval(()=>go((cur+1)%slides.length), +hero.dataset.interval || 6000); }
   if (slides.length){ requestAnimationFrame(()=>go(0)); restart(); }
@@ -491,6 +771,158 @@
   addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('open'); });
 
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ---- Credits: bands, project cards, gallery, footer list ----
+  document.querySelectorAll('.band').forEach(b => creditBadge(b, cssUrl(b, 'bg')));
+  document.querySelectorAll('.card-img').forEach(ci => {
+    const main = cssUrl(ci, 'img'), fb = cssUrl(ci, 'img-fallback'), host = ci.parentElement;
+    if (!main) return;
+    const t = new Image();
+    t.onload = () => creditBadge(host, main);
+    t.onerror = () => fb && creditBadge(host, fb);
+    t.src = main;
+  });
+  document.querySelectorAll('.gallery img').forEach(img => {
+    const set = () => creditBadge(img.closest('figure'), img.getAttribute('src'));
+    img.addEventListener('load', set); if (img.complete && img.naturalWidth) set();
+  });
+  const keys = Object.keys(CREDITS);
+  if (keys.length){
+    const list = document.getElementById('creditList');
+    keys.forEach(k => {
+      const c = CREDITS[k], li = document.createElement('li');
+      li.append(link(c.title ? '“' + c.title + '”' : 'Photo', c.source), ' by ', link(c.author || 'Unknown', c.authorUrl));
+      if (c.license) li.append(', licensed under ', link(c.license, c.licenseUrl));
+      li.append(c.changes ? '. Changes: ' + c.changes + '.' : '.');
+      list.appendChild(li);
+    });
+    document.getElementById('credits').hidden = false;
+  }
+
+  // ---- Virtual postcards ----
+  const CFG = window.POSTCARD_CONFIG || {};
+  const HOME = CFG.home || {name:'Santiago', lat:-33.4489, lon:-70.6693};
+  const $ = id => document.getElementById(id);
+  const pc = $('pc'), front = $('pcFront');
+  const place = {city:'', region:'', country:'', cc:'', lat:null, lon:null};
+
+  function km(lat1, lon1, lat2, lon2){
+    const R = 6371, r = Math.PI/180, dLat = (lat2-lat1)*r, dLon = (lon2-lon1)*r;
+    const a = Math.sin(dLat/2)**2 + Math.cos(lat1*r)*Math.cos(lat2*r)*Math.sin(dLon/2)**2;
+    return Math.round(2*R*Math.asin(Math.sqrt(a)));
+  }
+  const fmtCoord = (v, pos, neg) => Math.abs(v).toFixed(1) + '°' + (v >= 0 ? pos : neg);
+  const distance = () => place.lat == null ? null : km(place.lat, place.lon, HOME.lat, HOME.lon);
+
+  function render(){
+    $('pcCity').textContent = place.city || 'Your city';
+    $('pcCountry').textContent = [place.region, place.country].filter(Boolean).join(', ') || 'Anywhere on Earth';
+    $('pcCoords').textContent = place.lat == null ? '' : fmtCoord(place.lat,'N','S') + '  ' + fmtCoord(place.lon,'E','W');
+    $('pcPmCity').textContent = place.city || 'Earth';
+    const d = distance();
+    $('pcDist').textContent = d == null ? ' ' : (d < 50 ? 'Sent from right here in ' + HOME.name : d.toLocaleString('en-US') + ' km to ' + HOME.name);
+    const flag = $('pcFlag'); flag.textContent = '';
+    if (place.cc){
+      const img = new Image(); img.alt = place.country + ' flag';
+      img.src = 'https://flagcdn.com/w160/' + place.cc.toLowerCase() + '.png';
+      img.onerror = () => { flag.textContent = place.cc.toUpperCase(); };
+      flag.appendChild(img);
+    } else flag.textContent = '✉';
+    $('pcMsgOut').textContent = $('pcText').value.trim() || 'Hola Abhishek! …';
+    $('pcNameOut').textContent = $('pcName').value.trim() || 'A friend';
+    $('pcCount').textContent = $('pcText').value.length + ' / 280';
+  }
+  $('pcDate').textContent = new Date().toLocaleDateString('en-GB', {day:'2-digit', month:'short', year:'numeric'});
+
+  const hint = (msg, err) => { const h = $('pcLocHint'); h.textContent = msg; h.style.color = err ? '#f08a7a' : ''; };
+  const flip = on => pc.classList.toggle('flipped', on);
+
+  // Browser location → city name (BigDataCloud free client-side reverse geocoding, no key)
+  $('pcGeo').onclick = () => {
+    if (!navigator.geolocation) return hint('Your browser can’t share location — type your city instead.', true);
+    hint('Finding you…');
+    navigator.geolocation.getCurrentPosition(async pos => {
+      const lat = +pos.coords.latitude.toFixed(2), lon = +pos.coords.longitude.toFixed(2);
+      try {
+        const r = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`);
+        const j = await r.json();
+        Object.assign(place, {city: j.city || j.locality || '', region: j.principalSubdivision || '', country: j.countryName || '', cc: j.countryCode || '', lat, lon});
+        $('pcLoc').value = [place.city, place.country].filter(Boolean).join(', ');
+        hint('Got it — only your city and country go on the card.');
+      } catch(e){
+        Object.assign(place, {city:'', region:'', country:'', cc:'', lat, lon});
+        hint('Found your position but not the city name — type it above.', true);
+      }
+      flip(false); render();
+    }, () => hint('Location not shared — type your city instead.', true), {timeout:10000, maximumAge:600000});
+  };
+
+  // Typed city → coordinates (Open-Meteo geocoding, free, no key)
+  async function findTyped(){
+    const q = $('pcLoc').value.trim(); if (!q) return;
+    const [name, ...rest] = q.split(',').map(s => s.trim());
+    const want = rest.join(' ').toLowerCase();
+    hint('Looking up “' + q + '”…');
+    try {
+      const r = await fetch('https://geocoding-api.open-meteo.com/v1/search?count=10&language=en&format=json&name=' + encodeURIComponent(name));
+      const res = (await r.json()).results || [];
+      const hit = (want && res.find(x => [x.country, x.country_code, x.admin1].some(v => v && v.toLowerCase().includes(want)))) || res[0];
+      if (!hit) throw 0;
+      Object.assign(place, {city: hit.name, region: hit.admin1 || '', country: hit.country || '', cc: hit.country_code || '', lat: hit.latitude, lon: hit.longitude});
+      hint('Found ' + [hit.name, hit.admin1, hit.country].filter(Boolean).join(', ') + '. Not right? Add the country after a comma.');
+    } catch(e){
+      Object.assign(place, {city: name, region:'', country: rest.join(', '), cc:'', lat:null, lon:null});
+      hint('Couldn’t find that place on the map — it will still go on your card as written.', true);
+    }
+    flip(false); render();
+  }
+  $('pcFind').onclick = findTyped;
+  $('pcLoc').addEventListener('keydown', e => { if (e.key === 'Enter'){ e.preventDefault(); findTyped(); } });
+  $('pcLoc').addEventListener('change', () => { if ($('pcLoc').value.trim() && !$('pcLoc').value.toLowerCase().startsWith((place.city || '#').toLowerCase())) findTyped(); });
+
+  document.querySelectorAll('input[name=pcTheme]').forEach(r => r.addEventListener('change', () => { front.dataset.theme = r.value; flip(false); }));
+  ['pcText','pcName'].forEach(id => { $(id).addEventListener('input', render); $(id).addEventListener('focus', () => flip(true)); });
+  $('pcFlip').onclick = () => flip(!pc.classList.contains('flipped'));
+
+  const status = (msg, cls) => { const s = $('pcStatus'); s.textContent = msg; s.className = 'status ' + (cls || ''); };
+  $('pcForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    if ($('pcBot').checked) return;
+    const name = $('pcName').value.trim(), text = $('pcText').value.trim(), email = $('pcEmail').value.trim();
+    if (!place.city && !$('pcLoc').value.trim()) return status('Add your location first.', 'err');
+    if (!place.city) await findTyped();
+    if (!name) return status('Please add your name.', 'err');
+    if (!text) return status('Write a short message for the card.', 'err');
+    if (email && !$('pcEmail').checkValidity()) return status('That email address doesn’t look right.', 'err');
+
+    const where = [place.city, place.region, place.country].filter(Boolean).join(', ');
+    const d = distance();
+    const theme = front.dataset.theme;
+    const body = `${text}\n\n— ${name}${email ? ' <' + email + '>' : ''}\nFrom: ${where}${d != null ? '\nDistance to ' + HOME.name + ': ' + d.toLocaleString('en-US') + ' km' : ''}\nCard design: ${theme}`;
+    const subject = `Virtual postcard from ${place.city || 'somewhere'}${place.country ? ', ' + place.country : ''}`;
+
+    if (!CFG.web3formsKey){
+      location.href = 'mailto:' + CFG.fallbackEmail + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+      return status('Your email app should open with the postcard ready to send.', 'ok');
+    }
+    const btn = $('pcSend'); btn.disabled = true; status('Sending…');
+    try {
+      const r = await fetch('https://api.web3forms.com/submit', {
+        method:'POST', headers:{'Content-Type':'application/json', Accept:'application/json'},
+        body: JSON.stringify({access_key: CFG.web3formsKey, subject, from_name: name, name, email: email || undefined,
+                              location: where, distance_km: d, card_design: theme, message: body, botcheck: false})
+      });
+      const j = await r.json();
+      if (!j.success) throw new Error(j.message);
+      status('Postcard sent — thank you, ' + name.split(' ')[0] + '!', 'ok');
+      flip(true); $('pcForm').reset(); front.dataset.theme = 'andes';
+      setTimeout(() => { btn.disabled = false; }, 30000);
+    } catch(err){
+      btn.disabled = false;
+      status('Couldn’t send right now. You can email me at ' + CFG.fallbackEmail + ' instead.', 'err');
+    }
+  });
+  render();
 })();
 </script>
 </body>
