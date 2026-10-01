@@ -4,9 +4,8 @@ Welcome! This is the source for my personal academic website. I am a PhD student
 
 ## What this website is about
 
-The site introduces me as a researcher and as a person. It covers my doctoral research, where geostatistics meets machine learning. It also covers the path that brought me here, from studying geology in India to doing research in Santiago, Chile.
+The site introduces me as a researcher and as a person. It covers my doctoral research and also the path that brought me here, from studying geology in India to doing research in Santiago, Chile.
 
-My research looks at **supervised classification of regionalized data**. Standard machine learning classifiers ignore spatial correlation. Geostatistics can use that correlation to classify better and to quantify how uncertain each classification is. My approach builds geostatistical proxies at the data locations, using simulation that filters out short-scale variability. These proxies then serve as features for machine learning models. I apply this to problems such as classifying hydrothermal alteration in porphyry Cu-Au deposits. The goal is better mineral resource estimation, for more efficient and sustainable mining.
 
 ## What you'll find here
 
